@@ -1,0 +1,5 @@
+Contact: mailto:support@skatsconsults.com
+Preferred-Languages: en
+Canonical: https://skatsconsults.com/.well-known/security.txt
+Policy: https://skatsconsults.com/privacy-policy.html
+Expires: 2027-08-12T00:00:00.000Z
