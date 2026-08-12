@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Skats Client Portal</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B2545;
+            --gold: #D4A24C;
+            --sage: #7BA88F;
+            --off-white: #F8FAFC;
+            --amber: #F59E0B;
+            /* Urgent Alert color instead of red */
+            --grey-text: #64748B;
+            --grey-bg: #E2E8F0;
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Inter', sans-serif;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--off-white);
+            display: flex;
+            color: #1E293B;
+        }
+
+        /* Sidebar layout */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--navy);
+            color: white;
+            min-height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            padding: 2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-brand img {
+            height: 32px;
+            filter: brightness(0) invert(1);
+        }
+
+        .sidebar-brand span {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 1.5rem 0;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-right: 3px solid var(--gold);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .user-block {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--navy);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 1200px;
+        }
+
+        /* Header & Titles */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3rem;
+        }
+
+        .page-title h1 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            color: var(--navy);
+            margin-bottom: 0.2rem;
+        }
+
+        .page-title p {
+            color: var(--grey-text);
+            font-size: 0.95rem;
+        }
+
+        /* Cards */
+        .grid-dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Action Alert */
+        .alert-card {
+            border-left: 4px solid var(--gold);
+            background: rgba(212, 162, 76, 0.05);
+        }
+
+        .btn-action {
+            display: inline-block;
+            background: var(--navy);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .btn-action:hover {
+            background: #133a6b;
+        }
+
+        /* Journey Progress (Task list) */
+        .journey-tracker {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .step-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            z-index: 2;
+        }
+
+        .step.done .step-icon {
+            background: var(--navy);
+            color: white;
+            border: 2px solid var(--navy);
+        }
+
+        .step.active .step-icon {
+            background: var(--gold);
+            color: white;
+            border: 2px solid var(--gold);
+        }
+
+        .step.upcoming .step-icon {
+            background: white;
+            color: var(--grey-bg);
+            border: 2px solid var(--grey-bg);
+        }
+
+        .step-content {
+            flex-grow: 1;
+            padding-bottom: 1.5rem;
+            border-left: 2px solid #e2e8f0;
+            margin-left: -13px;
+            padding-left: 23px;
+            position: relative;
+        }
+
+        .step-content.last {
+            border-left: none;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--navy);
+            font-size: 0.95rem;
+        }
+
+        .step-desc {
+            color: var(--grey-text);
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Doc checklist */
+        .doc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .doc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+        }
+
+        .doc-name {
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Badges */
+        .badge {
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.pending {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .badge.approved {
+            background: rgba(123, 168, 143, 0.1);
+            color: var(--sage);
+        }
+
+        .badge.action {
+            background: rgba(212, 162, 76, 0.1);
+            color: #b48530;
+        }
+
+        .badge.urgent {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--amber);
+        }
+
+        /* Warm amber */
+
+        /* Manager Card */
+        .manager-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .manager-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80') center/cover;
+        }
+
+        .btn-outline {
+            border: 1px solid #cbd5e1;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            color: var(--navy);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Quick Stats Row */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .stat-label {
+            color: var(--grey-text);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-val {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--navy);
+            font-family: var(--font-heading);
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <img src="logo.png" alt="Skats">
+            <span>Skats Portal</span>
+        </div>
+        <nav class="nav-list">
+            <a href="#" class="nav-item active"><i class="ri-dashboard-line"></i> Dashboard</a>
+            <a href="#" class="nav-item"><i class="ri-folder-shield-line"></i> Document Center</a>
+            <a href="#" class="nav-item"><i class="ri-message-3-line"></i> Messages <span
+                    style="background:var(--gold); color:white; font-size:0.7rem; padding: 0.1rem 0.4rem; border-radius:10px; margin-left:auto;">1</span></a>
+            <a href="#" class="nav-item"><i class="ri-calendar-event-line"></i> Appointments</a>
+            <a href="#" class="nav-item"><i class="ri-wallet-3-line"></i> Payments</a>
+            <a href="#" class="nav-item"><i class="ri-timeline-view"></i> Timeline Log</a>
+            <a href="#" class="nav-item"><i class="ri-settings-4-line"></i> Settings</a>
+        </nav>
+        <div class="user-block">
+            <div class="avatar">AF</div>
+            <div>
+                <div style="font-weight:600; font-size:0.9rem;">Alicia Fenwick</div>
+                <div style="color:var(--gold); font-size:0.8rem;">UK Tier 2 Visa</div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <!-- Header -->
+        <div class="page-header">
+            <div class="page-title">
+                <h1>Overview</h1>
+                <p>Track your UK Tier 2 visa processing status in real-time.</p>
+            </div>
+            <div>
+                <a href="#" class="btn-outline"><i class="ri-file-download-line"></i> Download Roadmap</a>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="card alert-card" style="margin-bottom: 2rem;">
+            <div class="card-title" style="margin-bottom: 0.5rem; color: #b48530;"><i class="ri-error-warning-fill"></i>
+                Action Required</div>
+            <p style="color: #475569;">Upload your stamped financial statement covering the last 28 days. Deadline for
+                compliance check is <strong>August 18th</strong>.</p>
+            <a href="#" class="btn-action">Go to Document Center</a>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Days in Process</div>
+                <div class="stat-val">14</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Documents Verified</div>
+                <div class="stat-val">4 / 7</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Est. Next Milestone</div>
+                <div class="stat-val" style="font-size: 1.4rem; margin-top: 0.4rem;">August 22</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Split Content -->
+        <div class="grid-dashboard">
+            <!-- Left: Journey Tracker -->
+            <div class="card">
+                <div class="card-title">Case Progression</div>
+                <div class="journey-tracker">
+
+                    <div class="step done">
+                        <div class="step-icon"><i class="ri-check-line"></i></div>
+                        <div class="step-content">
+                            <div class="step-title">Initial Legal Audit</div>
+                            <div class="step-desc">Profile evaluated. Case file #SK-4091 generated.</div>
+                        </div>
+                    </div>
+
+                    <div class="step done">
+                        <div class="step-icon"><i class="ri-check-line"></i></div>
+                        <div class="step-content">
+                            <div class="step-title">Employer Sponsorship Sync</div>
+                            <div class="step-desc">Certificate of Sponsorship validated with UK HR.</div>
+                        </div>
+                    </div>
+
+                    <div class="step active">
+                        <div class="step-icon"><i class="ri-loader-4-line"></i></div>
+                        <div class="step-content">
+                            <div class="step-title">Financial & Credential Verification</div>
+                            <div class="step-desc" style="color: var(--amber);">Awaiting final bank statements. TB
+                                Certificate approved.</div>
+                        </div>
+                    </div>
+
+                    <div class="step upcoming">
+                        <div class="step-icon"><i class="ri-time-line"></i></div>
+                        <div class="step-content">
+                            <div class="step-title">UKVI Application Lodgment</div>
+                            <div class="step-desc">Embassy paperwork submission processing.</div>
+                        </div>
+                    </div>
+
+                    <div class="step upcoming">
+                        <div class="step-icon"><i class="ri-time-line"></i></div>
+                        <div class="step-content last">
+                            <div class="step-title">Biometrics & Decision</div>
+                            <div class="step-desc">Awaiting VAC appointment scheduling.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right: Doc Status & Manager -->
+            <div style="display:flex; flex-direction:column; gap: 2rem;">
+
+                <div class="card">
+                    <div class="card-title">Your Case Manager</div>
+                    <div class="manager-info">
+                        <div class="manager-pic"></div>
+                        <div>
+                            <div style="font-weight: 600; color: var(--navy); font-size: 0.95rem;">Sarah Mitchell</div>
+                            <div style="color: var(--grey-text); font-size: 0.85rem;">Senior Consultant</div>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap: 0.5rem; margin-top: 1.5rem;">
+                        <a href="#" class="btn-outline" style="flex: 1; justify-content:center;"><i
+                                class="ri-chat-3-line"></i> Message</a>
+                        <a href="#" class="btn-outline" style="flex: 1; justify-content:center;"><i
+                                class="ri-phone-line"></i> Book Call</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Recent Documents <a href="#"
+                            style="font-size: 0.8rem; font-weight: 400; color:var(--navy);">View All</a></div>
+                    <div class="doc-list">
+                        <div class="doc-item">
+                            <div class="doc-name"><i class="ri-file-pdf-line" style="color:#ef4444;"></i> TB_Test.pdf
+                            </div>
+                            <span class="badge approved">Verified</span>
+                        </div>
+                        <div class="doc-item">
+                            <div class="doc-name"><i class="ri-file-pdf-line" style="color:#ef4444;"></i>
+                                Passport_Bio.pdf</div>
+                            <span class="badge pending">Reviewing</span>
+                        </div>
+                        <div class="doc-item"
+                            style="border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.05);">
+                            <div class="doc-name"><i class="ri-alert-line" style="color:var(--amber);"></i> Bank_Stm.pdf
+                            </div>
+                            <span class="badge urgent">Needs Edit</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 1rem; text-align: center;"><i
+                            class="ri-lock-2-line"></i> AES-256 Encrypted Transfer</p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

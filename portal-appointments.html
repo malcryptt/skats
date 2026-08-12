@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments | Skats Client Portal</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B2545;
+            --gold: #D4A24C;
+            --sage: #7BA88F;
+            --off-white: #F8FAFC;
+            --grey-text: #64748B;
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Inter', sans-serif;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--off-white);
+            display: flex;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--navy);
+            color: white;
+            min-height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            padding: 2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .sidebar-brand img {
+            height: 32px;
+            filter: brightness(0) invert(1);
+        }
+
+        .sidebar-brand span {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 1.5rem 0;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            padding: .8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: .2s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255, 255, 255, .06);
+            color: white;
+            border-right: 3px solid var(--gold);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .user-block {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, .1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--navy);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 3rem 4rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--navy);
+        }
+
+        .page-header p {
+            color: var(--grey-text);
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+        }
+
+        .appt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .appt-card {
+            border-left: 4px solid var(--navy);
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            border-top: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .appt-card .date-chip {
+            display: inline-flex;
+            background: rgba(11, 37, 69, .06);
+            color: var(--navy);
+            border-radius: 6px;
+            padding: .35rem .8rem;
+            font-size: .85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            gap: .5rem;
+            align-items: center;
+        }
+
+        .appt-card h3 {
+            font-size: 1.1rem;
+            color: var(--navy);
+            margin-bottom: .4rem;
+        }
+
+        .appt-card p {
+            font-size: .9rem;
+            color: var(--grey-text);
+            margin-bottom: 1rem;
+        }
+
+        .appt-actions {
+            display: flex;
+            gap: .8rem;
+        }
+
+        .btn-sm {
+            padding: .5rem 1rem;
+            border-radius: 6px;
+            font-size: .85rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            border: 1px solid #cbd5e1;
+            color: var(--navy);
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            transition: .2s;
+        }
+
+        .btn-sm.primary {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        .btn-sm:hover {
+            border-color: var(--gold);
+        }
+
+        .btn-sm.primary:hover {
+            background: #133a6b;
+        }
+
+        .booking-form label {
+            display: block;
+            margin-bottom: .4rem;
+            font-size: .9rem;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .booking-form select,
+        .booking-form input {
+            width: 100%;
+            padding: .8rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-size: .95rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .booking-form select:focus,
+        .booking-form input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-brand"><img src="logo.png" alt="Skats"><span>Skats Portal</span></div>
+        <nav class="nav-list">
+            <a href="portal.html" class="nav-item"><i class="ri-dashboard-line"></i> Dashboard</a>
+            <a href="portal-documents.html" class="nav-item"><i class="ri-folder-shield-line"></i> Document Center</a>
+            <a href="portal-messages.html" class="nav-item"><i class="ri-message-3-line"></i> Messages</a>
+            <a href="portal-appointments.html" class="nav-item active"><i class="ri-calendar-event-line"></i>
+                Appointments</a>
+            <a href="portal-payments.html" class="nav-item"><i class="ri-wallet-3-line"></i> Payments</a>
+            <a href="portal-timeline.html" class="nav-item"><i class="ri-timeline-view"></i> Timeline Log</a>
+            <a href="portal.html#settings" class="nav-item"><i class="ri-settings-4-line"></i> Settings</a>
+        </nav>
+        <div class="user-block">
+            <div class="avatar">AF</div>
+            <div>
+                <div style="font-weight:600;font-size:.9rem;">Alicia Fenwick</div>
+                <div style="color:var(--gold);font-size:.8rem;">UK Tier 2 Visa</div>
+            </div>
+        </div>
+    </aside>
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Appointments</h1>
+            <p>Book and manage your consultations and interview-prep sessions.</p>
+        </div>
+
+        <h3 style="color:var(--navy);margin-bottom:1rem;font-family:var(--font-heading);">Upcoming</h3>
+        <div class="appt-grid">
+            <div class="appt-card">
+                <div class="date-chip"><i class="ri-calendar-2-line"></i> Aug 18, 2026 · 2:00 PM WAT</div>
+                <h3>Document Review Session</h3>
+                <p>Final audit of your financial statements and credential index before UKVI lodgment.</p>
+                <div class="appt-actions">
+                    <a href="#" class="btn-sm primary"><i class="ri-video-line"></i> Join Virtual Call</a>
+                    <a href="#" class="btn-sm"><i class="ri-calendar-close-line"></i> Reschedule</a>
+                </div>
+            </div>
+            <div class="appt-card" style="border-left-color:var(--gold);">
+                <div class="date-chip" style="background:rgba(212,162,76,.08);color:#b48530;"><i
+                        class="ri-calendar-2-line"></i> Aug 22, 2026 · 11:00 AM WAT</div>
+                <h3>Interview Preparation Briefing</h3>
+                <p>Mock questions aligned to UK Tier 2 Genuineness Test criteria with Sarah Mitchell.</p>
+                <div class="appt-actions">
+                    <a href="#" class="btn-sm primary"><i class="ri-video-line"></i> Join Virtual Call</a>
+                    <a href="#" class="btn-sm"><i class="ri-calendar-close-line"></i> Reschedule</a>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="color:var(--navy);margin:2rem 0 1rem;font-family:var(--font-heading);">Book a New Session</h3>
+        <div class="card" style="max-width:500px;">
+            <form class="booking-form">
+                <label>Session Type</label>
+                <select>
+                    <option>Consultation / Case Review</option>
+                    <option>Interview Preparation</option>
+                    <option>Document Submission Walk-Through</option>
+                    <option>Status Catch-Up</option>
+                </select>
+                <label>Preferred Date</label>
+                <input type="date" min="2026-08-13">
+                <label>Preferred Time (WAT)</label>
+                <select>
+                    <option>10:00 AM</option>
+                    <option>11:00 AM</option>
+                    <option>2:00 PM</option>
+                    <option>3:00 PM</option>
+                    <option>4:00 PM</option>
+                </select>
+                <button type="submit" class="btn-sm primary" style="padding:.8rem 1.5rem;">Request Appointment</button>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

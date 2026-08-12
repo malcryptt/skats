@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Timeline | Skats Client Portal</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B2545;
+            --gold: #D4A24C;
+            --sage: #7BA88F;
+            --off-white: #F8FAFC;
+            --grey-text: #64748B;
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Inter', sans-serif;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--off-white);
+            display: flex;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--navy);
+            color: white;
+            min-height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            padding: 2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .sidebar-brand img {
+            height: 32px;
+            filter: brightness(0) invert(1);
+        }
+
+        .sidebar-brand span {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 1.5rem 0;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            padding: .8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: .2s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255, 255, 255, .06);
+            color: white;
+            border-right: 3px solid var(--gold);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .user-block {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, .1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--navy);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 3rem 4rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--navy);
+        }
+
+        .page-header p {
+            color: var(--grey-text);
+        }
+
+        /* Timeline list */
+        .timeline-log {
+            max-width: 720px;
+        }
+
+        .log-group {
+            margin-bottom: 2.5rem;
+        }
+
+        .log-month {
+            font-size: .8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--grey-text);
+            margin-bottom: 1rem;
+            padding-bottom: .5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .log-entry {
+            display: flex;
+            gap: 1.2rem;
+            padding: .9rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            align-items: flex-start;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .log-dot.complete {
+            background: var(--sage);
+        }
+
+        .log-dot.action {
+            background: var(--gold);
+        }
+
+        .log-dot.info {
+            background: #cbd5e1;
+        }
+
+        .log-date {
+            font-size: .82rem;
+            color: var(--grey-text);
+            white-space: nowrap;
+            width: 70px;
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+
+        .log-desc strong {
+            display: block;
+            font-size: .95rem;
+            color: #1e293b;
+            margin-bottom: .2rem;
+        }
+
+        .log-desc span {
+            font-size: .85rem;
+            color: var(--grey-text);
+        }
+
+        .log-actor {
+            font-size: .78rem;
+            color: #94a3b8;
+            margin-top: .35rem;
+            display: flex;
+            align-items: center;
+            gap: .3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-brand"><img src="logo.png" alt="Skats"><span>Skats Portal</span></div>
+        <nav class="nav-list">
+            <a href="portal.html" class="nav-item"><i class="ri-dashboard-line"></i> Dashboard</a>
+            <a href="portal-documents.html" class="nav-item"><i class="ri-folder-shield-line"></i> Document Center</a>
+            <a href="portal-messages.html" class="nav-item"><i class="ri-message-3-line"></i> Messages</a>
+            <a href="portal-appointments.html" class="nav-item"><i class="ri-calendar-event-line"></i> Appointments</a>
+            <a href="portal-payments.html" class="nav-item"><i class="ri-wallet-3-line"></i> Payments</a>
+            <a href="portal-timeline.html" class="nav-item active"><i class="ri-timeline-view"></i> Timeline Log</a>
+            <a href="portal.html#settings" class="nav-item"><i class="ri-settings-4-line"></i> Settings</a>
+        </nav>
+        <div class="user-block">
+            <div class="avatar">AF</div>
+            <div>
+                <div style="font-weight:600;font-size:.9rem;">Alicia Fenwick</div>
+                <div style="color:var(--gold);font-size:.8rem;">UK Tier 2 Visa</div>
+            </div>
+        </div>
+    </aside>
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Case Timeline</h1>
+            <p>A chronological, auto-generated log of every action on your case file.</p>
+        </div>
+
+        <div class="timeline-log">
+            <!-- August 2026 -->
+            <div class="log-group">
+                <div class="log-month">August 2026</div>
+
+                <div class="log-entry">
+                    <div class="log-dot action"></div>
+                    <div class="log-date">Aug 12</div>
+                    <div class="log-desc">
+                        <strong>Document: Bank Statement requested</strong>
+                        <span>28-day UKVI-compliant statement required for financial verification phase.</span>
+                        <div class="log-actor"><i class="ri-user-3-line"></i> Sarah Mitchell — Case Manager</div>
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-dot complete"></div>
+                    <div class="log-date">Aug 11</div>
+                    <div class="log-desc">
+                        <strong>Document: TB Certificate approved</strong>
+                        <span>Passed UKVI medical clearance requirements. No further action needed.</span>
+                        <div class="log-actor"><i class="ri-user-3-line"></i> Sarah Mitchell — Case Manager</div>
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-dot complete"></div>
+                    <div class="log-date">Aug 10</div>
+                    <div class="log-desc">
+                        <strong>Document: TB Certificate (TB_Test.pdf) submitted</strong>
+                        <span>Uploaded by client and sent for review.</span>
+                        <div class="log-actor"><i class="ri-account-circle-line"></i> Alicia Fenwick — Client</div>
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-dot complete"></div>
+                    <div class="log-date">Aug 8</div>
+                    <div class="log-desc">
+                        <strong>Payment: INV-002 confirmed ($250)</strong>
+                        <span>Filing & Processing Services instalment cleared successfully.</span>
+                        <div class="log-actor"><i class="ri-secure-payment-line"></i> System — Automated</div>
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-dot complete"></div>
+                    <div class="log-date">Aug 6</div>
+                    <div class="log-desc">
+                        <strong>Sponsor Certificate of Sponsorship validated</strong>
+                        <span>CoS reference verified against UKVI sponsor registry. Employer approved.</span>
+                        <div class="log-actor"><i class="ri-user-3-line"></i> Sarah Mitchell — Case Manager</div>
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-dot info"></div>
+                    <div class="log-date">Aug 1</div>
+                    <div class="log-desc">
+                        <strong>Case #SK-4091 opened</strong>
+                        <span>Profile audit completed. Sarah Mitchell assigned as primary consultant.</span>
+                        <div class="log-actor"><i class="ri-secure-payment-line"></i> System — Automated</div>
+                    </div>
+                </div>
+
+                <div class="log-entry">
+                    <div class="log-dot complete"></div>
+                    <div class="log-date">Aug 1</div>
+                    <div class="log-desc">
+                        <strong>Payment: INV-001 confirmed ($150)</strong>
+                        <span>Initial Retainer / Case Opening fee processed.</span>
+                        <div class="log-actor"><i class="ri-secure-payment-line"></i> System — Automated</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

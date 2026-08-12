@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Client Portal Login | Skats Consults</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="description" content="Secure login portal designed for active Skats Consults clients.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: var(--font-body);
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 480px;
+            padding: 1rem;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .brand-logo-white {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .brand-logo-white img {
+            height: 48px;
+            filter: brightness(0) invert(1);
+        }
+
+        .login-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-card h1 {
+            font-family: var(--font-heading);
+            color: var(--navy);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-card p.subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 162, 76, 0.1);
+        }
+
+        .forgot-link {
+            float: right;
+            font-size: 0.85rem;
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn-full {
+            width: 100%;
+            display: block;
+        }
+
+        .security-note {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .security-note i {
+            color: var(--sage);
+            font-size: 1.5rem;
+        }
+
+        .return-link {
+            display: block;
+            text-align: center;
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .return-link:hover {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-wrapper">
+        <div class="login-header">
+            <a href="index.html" class="brand-logo-white">
+                <img src="logo.png" alt="Skats Consults">
+                <span><strong>Skats</strong> Consults</span>
+            </a>
+            <div style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">Client Case Portal</div>
+        </div>
+
+        <div class="login-card">
+            <h1>Sign In</h1>
+            <p class="subtitle">Access your secure immigration dashboard.</p>
+
+            <form action="portal.html" method="GET">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" required placeholder="client@example.com">
+                </div>
+
+                <div class="form-group">
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required placeholder="••••••••">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <label for="2fa">Authentication Code (2FA)</label>
+                    <input type="text" id="2fa" class="form-control" required placeholder="6-digit code">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">Access Dashboard <i class="ri-arrow-right-line"
+                        style="margin-left:0.5rem;"></i></button>
+
+                <div class="security-note">
+                    <i class="ri-shield-keyhole-fill"></i>
+                    <div>Your case data is encrypted and only visible to you and your assigned case manager. Ensure you
+                        are on a secure connection.</div>
+                </div>
+            </form>
+        </div>
+
+        <a href="index.html" class="return-link"><i class="ri-arrow-left-line"></i> Return to main website</a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+# Python processing scripts (not needed in deployment)
+patch_features.py
+process_logo.py
+
+# Raw source assets
+*.png.orig
+*.bak
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+
+# Source images that aren't the optimised assets
+ChatGPT\ Image*.png

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Skats Consults</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="description"
+        content="Reach out to Skats Consults to book your strategic visa consultation today. Global HQ in Tech District.">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--navy);
+        }
+
+        .form-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 1rem;
+        }
+
+        .form-field:focus {
+            box-shadow: 0 0 0 3px rgba(27, 111, 168, 0.1);
+        }
+
+        textarea.form-field {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="brand-logo">
+                <img src="logo.png" alt="Skats Consults" class="brand-logo-img">
+                <strong>Skats</strong> Consults
+            </a>
+            <!-- Shared Links would normally be imported, copied direct here -->
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <div class="nav-dropdown">
+                    <a href="services.html" class="dropdown-toggle">Services <i class="ri-arrow-down-s-line"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="services/study-visa.html">Study Visas</a>
+                        <a href="services/work-visa.html">Work Permits</a>
+                        <a href="services/tourist-visa.html">Tourist Visas</a>
+                        <a href="services/business-visa.html">Business Visas</a>
+                        <a href="services/relocation.html">Relocation</a>
+                    </div>
+                </div>
+                <a href="how-it-works.html">Process</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="#" class="btn btn-secondary">Client Portal</a>
+                <a href="contact.html" class="btn btn-primary">Book Consultation</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="ri-menu-line"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero" style="min-height: 40vh; padding-top: 120px; text-align: center;">
+        <svg class="flight-path-svg" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true"
+            style="opacity:0.1; top: 0;">
+            <path d="M0,250 Q250,50 500,200 T1000,100" fill="none" class="flight-line"></path>
+        </svg>
+        <div class="container hero-content" style="margin: 0 auto;">
+            <h1>Let's Start Your <br><span class="text-gold">Journey</span></h1>
+            <p class="subtitle" style="margin: 0 auto;">Reach out to structure your pathway seamlessly.</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <div class="container">
+            <a href="index.html">Home</a> <i class="ri-arrow-right-s-line"></i> <span>Contact</span>
+        </div>
+    </div>
+
+    <main class="section-padding">
+        <div class="container contact-grid content-side">
+
+            <!-- Booking Form -->
+            <div
+                style="background: white; padding: 2.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+                <h3 style="margin-bottom: 2rem; font-size: 1.5rem;">Strategic Consultation Request</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Full Legal Name</label>
+                        <input type="text" class="form-field" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <label>Email Address</label>
+                            <input type="email" class="form-field" placeholder="john@example.com" required>
+                        </div>
+                        <div>
+                            <label>Phone / WhatsApp</label>
+                            <input type="tel" class="form-field" placeholder="+123 456 7890">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Visa Type of Interest</label>
+                        <select class="form-field">
+                            <option>Study Visa</option>
+                            <option>Work Permit / Corporate Selection</option>
+                            <option>Tourist / Visitor Visa</option>
+                            <option>Business / Investor Visa</option>
+                            <option>Family Relocation</option>
+                            <option>Not Sure Yet</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Consultation Method</label>
+                        <select class="form-field">
+                            <option>Virtual (Zoom/Google Meet)</option>
+                            <option>In-Person (Our HQ)</option>
+                            <option>Phone Call</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Context (Optional)</label>
+                        <textarea class="form-field"
+                            placeholder="Briefly describe your destination and current situation..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">Submit Request <i
+                            class="ri-send-plane-fill"></i></button>
+                    <p style="margin-top: 1rem; font-size: 0.85rem; color: #64748b; text-align: center;">We will reach
+                        back out within 24 hours.</p>
+                </form>
+            </div>
+
+            <!-- Alternative Contacts & Trust -->
+            <div>
+                <h3 style="margin-bottom: 2rem;">Global Headquarters</h3>
+
+                <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                    <i class="ri-map-pin-2-fill text-gold" style="font-size: 1.5rem;"></i>
+                    <div>
+                        <strong style="color: var(--navy); display: block;">Tech District Office</strong>
+                        <span style="color: #475569;">123 Innovation Drive, Suite 400<br>City 10001, Global</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                    <i class="ri-phone-fill text-gold" style="font-size: 1.5rem;"></i>
+                    <div>
+                        <strong style="color: var(--navy); display: block;">Direct Lines</strong>
+                        <span style="color: #475569;">+1 (800) 123-4567<br>WhatsApp: +1 (800) 123-4568</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-bottom: 3rem;">
+                    <i class="ri-mail-send-fill text-gold" style="font-size: 1.5rem;"></i>
+                    <div>
+                        <strong style="color: var(--navy); display: block;">Email Contacts</strong>
+                        <span style="color: #475569;">Consultations: <a href="mailto:info@skatsconsults.com"
+                                style="color: var(--sky-blue);">info@skatsconsults.com</a><br>Partnerships:
+                            partner@skatsconsults.com</span>
+                    </div>
+                </div>
+
+                <div style="background: var(--navy); color: white; padding: 2rem; border-radius: var(--radius-md);">
+                    <h4 style="color: var(--gold); margin-bottom: 1rem;">Why Book With Us?</h4>
+                    <ul class="feature-list" style="margin-top:0;">
+                        <li style="margin-bottom: 0.5rem;"><i class="ri-shield-check-fill text-sage"></i> <span
+                                style="color: white; font-size: 0.95rem;">98% Approval rate on processed visas.</span>
+                        </li>
+                        <li style="margin-bottom: 0.5rem;"><i class="ri-time-fill text-sage"></i> <span
+                                style="color: white; font-size: 0.95rem;">24-hour response SLA on all inquiries.</span>
+                        </li>
+                        <li><i class="ri-user-star-fill text-sage"></i> <span
+                                style="color: white; font-size: 0.95rem;">Dedicated consultant for your entire
+                                journey.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="brand-logo footer-logo">
+                    <img src="logo.png" alt="Skats Consults" class="brand-logo-img">
+                    <strong>Skats</strong> Consults
+                </a>
+                <p>Premium visa processing, corporate immigration advisory, and travel consultation services.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="services/study-visa.html">Study Visas</a></li>
+                    <li><a href="services/work-visa.html">Work Permits</a></li>
+                    <li><a href="services/relocation.html">Family Relocation</a></li>
+                    <li><a href="services/business-visa.html">Business & Investor</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="resources.html">Blog / Resources</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; align-items:center;">
+                    <p style="margin:0; font-size:0.85rem; color:#94a3b8;">&copy; 2026 Skats Leadership Development Consults Ltd.</p>
+                    <div style="display:flex; gap:1.5rem;">
+                        <a href="privacy-policy.html" style="font-size:0.85rem;">Privacy Policy</a>
+                        <a href="terms-of-service.html" style="font-size:0.85rem;">Terms of Service</a>
+                        <a href="refund-policy.html" style="font-size:0.85rem;">Refunds</a>
+                        <a href="disclaimer.html" style="font-size:0.85rem;">Disclaimer</a>
+                    </div>
+                </div>
+                <p style="font-size: 0.75rem; color: #475569; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); line-height: 1.6;"><strong>Disclaimer:</strong> Skats Leadership Development Consults Ltd is an independent, private consultancy and is NOT affiliated with any government agency or embassy. We provide expert advisory and document processing assistance, but the final decision rests solely with the respective embassies. We cannot guarantee visa approval.</p>
+            </div>
+        </div>
+    </footer>
+
+
+        <a href="https://wa.me/18001234568" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <i class="ri-whatsapp-fill"></i>
+    </a>
+
+    <div class="mobile-sticky-cta">
+        <a href="contact.html" class="btn btn-primary" style="width: 100%;">Book Consultation</a>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
