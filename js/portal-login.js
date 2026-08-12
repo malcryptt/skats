@@ -1,4 +1,4 @@
-import { auth, signInWithEmailAndPassword } from "./firebase-config.js";
+import { auth, signInWithEmailAndPassword, sendPasswordResetEmail } from "./firebase-config.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
@@ -57,4 +57,24 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.disabled = false;
         }
     });
+
+    // Forgot Password Flow
+    const forgotLink = document.querySelector('.forgot-link');
+    if (forgotLink) {
+        forgotLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const rawEmail = emailInput.value.trim();
+            const resetEmail = prompt("Please confirm your account email address to send a password reset link:", rawEmail);
+
+            if (resetEmail) {
+                try {
+                    await sendPasswordResetEmail(auth, resetEmail);
+                    alert(`If an account exists for ${resetEmail}, a password reset link has been sent to it!`);
+                } catch (error) {
+                    console.error("Reset password error:", error);
+                    alert("An error occurred. Please make sure the email is valid.");
+                }
+            }
+        });
+    }
 });
