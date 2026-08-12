@@ -136,6 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
+                // Reset statically hardcoded HTML fallback to 0 before JS animation
+                targetEl.innerText = '0';
+
                 const duration = 1500;
                 const startTime = performance.now();
 
