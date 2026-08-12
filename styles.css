@@ -336,6 +336,7 @@ ul {
 .nav-actions {
     display: flex;
     gap: 1rem;
+    align-items: center;
 }
 
 .mobile-menu-btn {
@@ -412,7 +413,21 @@ ul {
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 800px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 3rem;
+}
+
+@media (max-width: 900px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-actions {
+        justify-content: center;
+    }
 }
 
 .badge {
@@ -865,9 +880,7 @@ ul {
 }
 
 .footer-bottom .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: block;
     color: #64748b;
     font-size: 0.9rem;
 }

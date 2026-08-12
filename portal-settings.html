@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Skats Client Portal</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B2545;
+            --gold: #D4A24C;
+            --sage: #7BA88F;
+            --off-white: #F8FAFC;
+            --grey-text: #64748B;
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Inter', sans-serif;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--off-white);
+            display: flex;
+            color: #1e293b;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--navy);
+            color: white;
+            min-height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            padding: 2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .sidebar-brand img {
+            height: 32px;
+            filter: brightness(0) invert(1);
+        }
+
+        .sidebar-brand span {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 1.5rem 0;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            padding: .8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: .2s;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255, 255, 255, .05);
+            color: white;
+            border-right: 3px solid var(--gold);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .user-block {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, .1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--navy);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 900px;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--navy);
+        }
+
+        .page-header p {
+            color: var(--grey-text);
+            font-size: .95rem;
+        }
+
+        .settings-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+            margin-bottom: 2rem;
+        }
+
+        .settings-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: .5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: .85rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: .4rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: .8rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-size: .95rem;
+            transition: border-color .2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .form-control[readonly] {
+            background: #f8fafc;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .toggle-row:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-label {
+            font-weight: 500;
+            font-size: .95rem;
+        }
+
+        .toggle-desc {
+            font-size: .8rem;
+            color: var(--grey-text);
+            margin-top: .2rem;
+        }
+
+        /* Switch CSS */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: .3s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--sage);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(20px);
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: .8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: #133a6b;
+        }
+
+        .danger-zone {
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 3rem;
+        }
+
+        .danger-zone h3 {
+            color: #be123c;
+            margin-bottom: .5rem;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-brand"><img src="logo.png" alt="Skats"><span>Skats Portal</span></div>
+        <nav class="nav-list">
+            <a href="portal.html" class="nav-item"><i class="ri-dashboard-line"></i> Dashboard</a>
+            <a href="portal-documents.html" class="nav-item"><i class="ri-folder-shield-line"></i> Document Center</a>
+            <a href="portal-messages.html" class="nav-item"><i class="ri-message-3-line"></i> Messages <span
+                    style="background:var(--gold);color:white;font-size:.7rem;padding:.1rem .4rem;border-radius:10px;margin-left:auto;">1</span></a>
+            <a href="portal-appointments.html" class="nav-item"><i class="ri-calendar-event-line"></i> Appointments</a>
+            <a href="portal-payments.html" class="nav-item"><i class="ri-wallet-3-line"></i> Payments</a>
+            <a href="portal-timeline.html" class="nav-item"><i class="ri-timeline-view"></i> Timeline Log</a>
+            <a href="portal-settings.html" class="nav-item active"><i class="ri-settings-4-line"></i> Settings</a>
+        </nav>
+        <div class="user-block">
+            <div class="avatar">AF</div>
+            <div>
+                <div style="font-weight:600;font-size:.9rem;">Alicia Fenwick</div>
+                <div style="color:var(--gold);font-size:.8rem;">UK Tier 2 Visa</div>
+            </div>
+        </div>
+    </aside>
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Account Settings</h1>
+            <p>Manage your profile, security, and notification preferences.</p>
+        </div>
+
+        <!-- Readonly Case Profile -->
+        <div class="settings-card" style="background:#f8fafc;">
+            <h3>Case Identity (Read-only)</h3>
+            <div class="form-grid">
+                <div class="form-group"><label>Case Number</label><input type="text" class="form-control"
+                        value="#SK-4091" readonly></div>
+                <div class="form-group"><label>Visa Type</label><input type="text" class="form-control"
+                        value="UK Tier 2 (General) Standard" readonly></div>
+                <div class="form-group"><label>Assigned Case Manager</label><input type="text" class="form-control"
+                        value="Sarah Mitchell" readonly></div>
+                <div class="form-group"><label>Filing Date</label><input type="text" class="form-control"
+                        value="August 1, 2026" readonly></div>
+            </div>
+            <p style="font-size:.8rem; color:var(--grey-text);"><i class="ri-information-line"></i> To amend core case
+                parameters, please message your case manager directly.</p>
+        </div>
+
+        <!-- Personal Info -->
+        <div class="settings-card">
+            <h3>Contact Information</h3>
+            <div class="form-grid">
+                <div class="form-group"><label>Full Legal Name</label><input type="text" class="form-control"
+                        value="Alicia Fenwick"></div>
+                <div class="form-group"><label>Primary Email</label><input type="email" class="form-control"
+                        value="alicia.fenwick@example.com"></div>
+                <div class="form-group"><label>Phone Number</label><input type="tel" class="form-control"
+                        value="+44 7911 123456"></div>
+            </div>
+            <button class="btn-primary">Save Changes</button>
+        </div>
+
+        <!-- Password -->
+        <div class="settings-card">
+            <h3>Security</h3>
+            <div class="form-grid">
+                <div class="form-group"><label>Current Password</label><input type="password" class="form-control"
+                        placeholder="••••••••"></div>
+                <div class="form-group"><label>New Password</label><input type="password" class="form-control"></div>
+            </div>
+            <button class="btn-primary">Update Password</button>
+        </div>
+
+        <!-- Notification Prefs -->
+        <div class="settings-card">
+            <h3>Notification Preferences</h3>
+            <div class="toggle-row">
+                <div>
+                    <div class="toggle-label">Direct Messages</div>
+                    <div class="toggle-desc">Receive an email when your case manager replies.</div>
+                </div>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+                <div>
+                    <div class="toggle-label">Document Status Alerts</div>
+                    <div class="toggle-desc">SMS notifications if a document is rejected or approved.</div>
+                </div>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-row">
+                <div>
+                    <div class="toggle-label">Appointment Reminders</div>
+                    <div class="toggle-desc">24h and 1h automated alerts for upcoming sessions.</div>
+                </div>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <div class="danger-zone">
+            <h3>Account Sign Out</h3>
+            <p style="font-size:.9rem; color:#9f1239; margin-bottom:1rem;">Securely close your current session.</p>
+            <a href="index.html" class="btn-primary" style="background:#be123c; text-decoration:none;">Log Out</a>
+        </div>
+
+    </main>
+</body>
+
+</html>
