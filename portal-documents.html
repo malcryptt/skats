@@ -337,12 +337,13 @@
             </div>
         </div>
 
-        <div class="upload-zone">
+        <div class="upload-zone upload-box">
             <div class="upload-icon"><i class="ri-upload-cloud-2-line"></i></div>
             <h3 style="color:var(--navy); font-family:var(--font-heading); margin-bottom:.5rem;">Drag & Drop files here
             </h3>
             <p style="color:var(--grey-text); font-size:.9rem; margin-bottom:1.5rem;">Supported formats: PDF, JPG, PNG
                 (Max 15MB)</p>
+            <input type="file" id="file-upload" style="display:none;" accept=".pdf, .jpg, .jpeg, .png">
             <button class="filter-btn" style="background:var(--navy); color:white;">Browse Files</button>
         </div>
 
@@ -351,6 +352,14 @@
             <button class="filter-btn">Action Required (1)</button>
             <button class="filter-btn">Under Review (1)</button>
             <button class="filter-btn">Approved (2)</button>
+        </div>
+
+        <!-- Live Dynamic Documents from Firebase -->
+        <div class="doc-category">
+            <h3 class="cat-title">Recently Uploaded</h3>
+            <div class="doc-list doc-list-container">
+                <!-- Dynamically populated via Firebase -->
+            </div>
         </div>
 
         <!-- Identity Category -->
@@ -440,6 +449,7 @@
     </main>
     <!-- Firebase Auth Guard -->
     <script type="module" src="js/auth-guard.js"></script>
+    <script type="module" src="js/portal-documents.js"></script>
 </body>
 
 </html>

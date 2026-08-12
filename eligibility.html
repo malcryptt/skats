@@ -267,7 +267,7 @@
                 <h2 class="quiz-question" style="font-size:1.8rem;">Let's get your personalized assessment.</h2>
                 <p style="color:#475569; margin-bottom: 2rem;">Our advisors use this data strictly to prepare an
                     actionable roadmap for you. We do not share your information.</p>
-                <form id="lead-form" onsubmit="submitForm(event)">
+                <form id="lead-form">
                     <div class="form-group">
                         <label>Full Legal Name</label>
                         <input type="text" class="form-control" required placeholder="John Doe">
@@ -342,21 +342,11 @@
             updateProgress(prevStepNum);
         }
 
-        function submitForm(e) {
-            e.preventDefault();
-            // Move to processing step
-            document.getElementById('step-4').classList.remove('active');
-            document.getElementById('step-5').classList.add('active');
-            updateProgress(5);
-
-            // Simulate API processing delay
-            setTimeout(() => {
-                document.getElementById('processing-state').style.display = 'none';
-                document.getElementById('success-state').style.display = 'block';
-                // Here, you would normally send the lead data (userAnswers + form data) to your backend (e.g. Web3Forms)
-            }, 2500);
-        }
+        // Expose to window so module can access
+        window.userAnswers = userAnswers;
+        window.updateProgress = updateProgress;
     </script>
+    <script type="module" src="js/forms.js"></script>
 </body>
 
 </html>
