@@ -342,6 +342,12 @@ ul {
     margin-left: auto;
 }
 
+.nav-actions .btn {
+    padding: 0.5rem 1rem;
+    /* Reduced horizontal stretch */
+    font-size: 0.9rem;
+}
+
 .mobile-menu-btn {
     display: none;
     background: none;
