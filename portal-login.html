@@ -161,39 +161,121 @@
         </div>
 
         <div class="login-card">
-            <h1>Sign In</h1>
-            <p class="subtitle">Access your secure immigration dashboard.</p>
+            <!-- Tab Switcher -->
+            <div style="display:flex; border-bottom:2px solid #e2e8f0; margin-bottom:2rem; gap:0;">
+                <button id="tab-signin" onclick="switchTab('signin')"
+                    style="flex:1; padding:0.8rem; background:none; border:none; font-family:inherit; font-size:1rem; font-weight:600; color:var(--navy); border-bottom:3px solid var(--navy); margin-bottom:-2px; cursor:pointer;">Sign
+                    In</button>
+                <button id="tab-register" onclick="switchTab('register')"
+                    style="flex:1; padding:0.8rem; background:none; border:none; font-family:inherit; font-size:1rem; font-weight:500; color:#94a3b8; border-bottom:3px solid transparent; margin-bottom:-2px; cursor:pointer;">Create
+                    Account</button>
+            </div>
 
-            <form id="login-form">
-                <div id="error-msg"
-                    style="display:none; background:#fee2e2; color:#ef4444; border:1px solid #fecaca; padding:1rem; border-radius:var(--radius-sm); margin-bottom:1.5rem; font-size:0.9rem; font-weight:500;">
-                </div>
+            <!-- SIGN IN FORM -->
+            <div id="panel-signin">
+                <h1 style="margin-bottom:0.3rem;">Welcome Back</h1>
+                <p class="subtitle">Access your secure immigration dashboard.</p>
 
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" class="form-control" required placeholder="client@example.com">
-                </div>
+                <form id="login-form">
+                    <div id="error-msg"
+                        style="display:none; background:#fee2e2; color:#ef4444; border:1px solid #fecaca; padding:1rem; border-radius:var(--radius-sm); margin-bottom:1.5rem; font-size:0.9rem; font-weight:500;">
+                    </div>
 
-                <div class="form-group">
-                    <a href="#" class="forgot-link">Forgot password?</a>
-                    <label for="password">Password</label>
-                    <input type="password" id="password" class="form-control" required placeholder="••••••••">
-                </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" required placeholder="client@example.com">
+                    </div>
 
-                <button type="submit" id="submit-btn" class="btn btn-primary btn-full"
-                    style="margin-top: 0.5rem; display:flex; justify-content:center; align-items:center;">Access
-                    Dashboard <i class="ri-arrow-right-line" style="margin-left:0.5rem;"></i></button>
+                    <div class="form-group">
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" required placeholder="••••••••">
+                    </div>
 
-                <div class="security-note">
-                    <i class="ri-shield-keyhole-fill"></i>
-                    <div>Your case data is encrypted and only visible to you and your assigned case manager. Ensure you
-                        are on a secure connection.</div>
-                </div>
-            </form>
+                    <button type="submit" id="submit-btn" class="btn btn-primary btn-full"
+                        style="margin-top:0.5rem; display:flex; justify-content:center; align-items:center;">
+                        Access Dashboard <i class="ri-arrow-right-line" style="margin-left:0.5rem;"></i>
+                    </button>
+
+                    <div class="security-note">
+                        <i class="ri-shield-keyhole-fill"></i>
+                        <div>Your case data is encrypted and only visible to you and your assigned case manager.</div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- REGISTER FORM -->
+            <div id="panel-register" style="display:none;">
+                <h1 style="margin-bottom:0.3rem;">Create Account</h1>
+                <p class="subtitle">Register to access your case portal.</p>
+
+                <form id="register-form">
+                    <div id="reg-error-msg"
+                        style="display:none; background:#fee2e2; color:#ef4444; border:1px solid #fecaca; padding:1rem; border-radius:var(--radius-sm); margin-bottom:1.5rem; font-size:0.9rem; font-weight:500;">
+                    </div>
+                    <div id="reg-success-msg"
+                        style="display:none; background:#dcfce7; color:#16a34a; border:1px solid #bbf7d0; padding:1rem; border-radius:var(--radius-sm); margin-bottom:1.5rem; font-size:0.9rem; font-weight:500;">
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                        <div class="form-group">
+                            <label for="reg-fullname">Full Legal Name</label>
+                            <input type="text" id="reg-fullname" class="form-control" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-username">Username</label>
+                            <input type="text" id="reg-username" class="form-control" required placeholder="johndoe">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-email">Email Address</label>
+                        <input type="email" id="reg-email" class="form-control" required
+                            placeholder="client@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" class="form-control" required
+                            placeholder="Min 8 characters" minlength="8">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-confirm">Confirm Password</label>
+                        <input type="password" id="reg-confirm" class="form-control" required
+                            placeholder="Re-enter your password">
+                    </div>
+
+                    <button type="submit" id="reg-submit-btn" class="btn btn-primary btn-full"
+                        style="margin-top:0.5rem; display:flex; justify-content:center; align-items:center;">
+                        Create My Account <i class="ri-user-add-line" style="margin-left:0.5rem;"></i>
+                    </button>
+
+                    <p style="margin-top:1rem; font-size:0.82rem; color:#64748b; text-align:center;">
+                        By registering, you agree to our <a href="terms-of-service.html"
+                            style="color:var(--sky-blue);">Terms of Service</a> and <a href="privacy-policy.html"
+                            style="color:var(--sky-blue);">Privacy Policy</a>.
+                    </p>
+                </form>
+            </div>
         </div>
 
         <a href="index.html" class="return-link"><i class="ri-arrow-left-line"></i> Return to main website</a>
     </div>
+
+    <script>
+        function switchTab(tab) {
+            const isSignin = tab === 'signin';
+            document.getElementById('panel-signin').style.display = isSignin ? 'block' : 'none';
+            document.getElementById('panel-register').style.display = isSignin ? 'none' : 'block';
+            document.getElementById('tab-signin').style.cssText += isSignin
+                ? '; color:var(--navy); border-bottom:3px solid var(--navy); font-weight:600;'
+                : '; color:#94a3b8; border-bottom:3px solid transparent; font-weight:500;';
+            document.getElementById('tab-register').style.cssText += isSignin
+                ? '; color:#94a3b8; border-bottom:3px solid transparent; font-weight:500;'
+                : '; color:var(--navy); border-bottom:3px solid var(--navy); font-weight:600;';
+        }
+    </script>
 
     <!-- Firebase Auth Logic -->
     <script type="module" src="js/portal-login.js"></script>
