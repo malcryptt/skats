@@ -4,15 +4,14 @@ import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from
 import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
 
-// TODO: Ask user for their real Firebase config variables.
-// Placing placeholder mock data for testing locally immediately without rejecting requests initially.
 const firebaseConfig = {
-    apiKey: "MOCK_API_KEY_SETUP_PENDING",
-    authDomain: "skats-portal-mock.firebaseapp.com",
-    projectId: "skats-portal-mock",
-    storageBucket: "skats-portal-mock.appspot.com",
-    messagingSenderId: "00000000000",
-    appId: "1:00000000000:web:mock123456789"
+    apiKey: "AIzaSyAsFfZN11JQuRQ1XM7aDJVMUatmgdmFUaE",
+    authDomain: "skats-consults.firebaseapp.com",
+    projectId: "skats-consults",
+    storageBucket: "skats-consults.firebasestorage.app",
+    messagingSenderId: "98599347696",
+    appId: "1:98599347696:web:9627898c512fa6c3126935",
+    measurementId: "G-PGVNXZ7QTR"
 };
 
 // Initialize Firebase App
