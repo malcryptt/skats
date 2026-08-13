@@ -8,7 +8,9 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;600&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css">
@@ -58,7 +60,8 @@
             cursor: pointer;
         }
 
-        .nav-item:hover, .nav-item.active {
+        .nav-item:hover,
+        .nav-item.active {
             background: rgba(255, 255, 255, 0.1);
             color: white;
         }
@@ -80,12 +83,12 @@
             color: var(--navy);
             margin-bottom: 0.5rem;
         }
-        
+
         .data-card {
             background: white;
             border-radius: var(--radius-md);
             padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
             margin-bottom: 2rem;
         }
 
@@ -94,7 +97,8 @@
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             padding: 1rem;
             text-align: left;
             border-bottom: 1px solid #e2e8f0;
@@ -115,17 +119,34 @@
             font-weight: 500;
         }
 
-        .status-new { background: #dbeafe; color: #1e3a8a; }
-        .status-active { background: #dcfce7; color: #166534; }
+        .status-new {
+            background: #dbeafe;
+            color: #1e3a8a;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
 
         /* Login Overlay for Admin */
         #admin-login-overlay {
-            position: fixed; inset: 0; background: var(--navy); z-index: 9999;
-            display: flex; align-items: center; justify-content: center;
+            position: fixed;
+            inset: 0;
+            background: var(--navy);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
         .admin-login-card {
-            background: white; padding: 3rem; border-radius: 12px;
-            width: 100%; max-width: 400px; text-align: center;
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
         }
     </style>
 </head>
@@ -136,15 +157,21 @@
     <div id="admin-login-overlay">
         <div class="admin-login-card">
             <h2 style="font-family:'Fraunces', serif; color:var(--navy); margin-bottom: 0.5rem;">Admin Access</h2>
-            <p style="color:#64748b; margin-bottom: 2rem; font-size: 0.9rem;">Sign in with your administrator account.</p>
-            
+            <p style="color:#64748b; margin-bottom: 2rem; font-size: 0.9rem;">Sign in with your administrator account.
+            </p>
+
             <form id="admin-login-form">
-                <div id="admin-error" style="display:none; color:#ef4444; background:#fee2e2; padding:0.8rem; border-radius:8px; margin-bottom:1rem; font-size:0.9rem;"></div>
-                
-                <input type="email" id="admin-email" class="form-control" placeholder="Admin Email" required style="margin-bottom: 1rem; width:100%; box-sizing:border-box;">
-                <input type="password" id="admin-password" class="form-control" placeholder="Password" required style="margin-bottom: 1.5rem; width:100%; box-sizing:border-box;">
-                
-                <button type="submit" id="admin-login-btn" class="btn btn-primary" style="width: 100%;">Authenticate</button>
+                <div id="admin-error"
+                    style="display:none; color:#ef4444; background:#fee2e2; padding:0.8rem; border-radius:8px; margin-bottom:1rem; font-size:0.9rem;">
+                </div>
+
+                <input type="email" id="admin-email" class="form-control" placeholder="Admin Email" required
+                    style="margin-bottom: 1rem; width:100%; box-sizing:border-box;">
+                <input type="password" id="admin-password" class="form-control" placeholder="Password" required
+                    style="margin-bottom: 1.5rem; width:100%; box-sizing:border-box;">
+
+                <button type="submit" id="admin-login-btn" class="btn btn-primary"
+                    style="width: 100%;">Authenticate</button>
             </form>
         </div>
     </div>
@@ -158,17 +185,21 @@
                 <span><strong>Skats</strong> Admin</span>
             </a>
             <nav style="flex-grow: 1;">
-                <a class="nav-item active" onclick="switchAdminTab('leads')" id="nav-leads"><i class="ri-inbox-archive-line"></i> Leads / Inquiries</a>
-                <a class="nav-item" onclick="switchAdminTab('clients')" id="nav-clients"><i class="ri-group-line"></i> Registered Clients</a>
+                <a class="nav-item active" onclick="switchAdminTab('leads')" id="nav-leads"><i
+                        class="ri-inbox-archive-line"></i> Leads / Inquiries</a>
+                <a class="nav-item" onclick="switchAdminTab('clients')" id="nav-clients"><i class="ri-group-line"></i>
+                    Registered Clients</a>
             </nav>
-            <div class="user-block" style="margin-top:auto; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.1);">
-                <a href="#" id="admin-logout" style="color:#fca5a5; text-decoration:none; font-size:0.9rem;"><i class="ri-logout-box-r-line"></i> Sign Out</a>
+            <div class="user-block"
+                style="margin-top:auto; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.1);">
+                <a href="#" id="admin-logout" style="color:#fca5a5; text-decoration:none; font-size:0.9rem;"><i
+                        class="ri-logout-box-r-line"></i> Sign Out</a>
             </div>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
-            
+
             <!-- LEADS TAB -->
             <div id="tab-leads">
                 <div class="page-header">
@@ -189,7 +220,10 @@
                             </tr>
                         </thead>
                         <tbody id="leads-tbody">
-                            <tr><td colspan="5" style="text-align:center; padding:2rem; color:#64748b;">Loading leads...</td></tr>
+                            <tr>
+                                <td colspan="5" style="text-align:center; padding:2rem; color:#64748b;">Loading leads...
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -215,7 +249,10 @@
                             </tr>
                         </thead>
                         <tbody id="clients-tbody">
-                            <tr><td colspan="5" style="text-align:center; padding:2rem; color:#64748b;">Loading clients...</td></tr>
+                            <tr>
+                                <td colspan="5" style="text-align:center; padding:2rem; color:#64748b;">Loading
+                                    clients...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -229,11 +266,12 @@
         function switchAdminTab(tab) {
             document.getElementById('tab-leads').style.display = tab === 'leads' ? 'block' : 'none';
             document.getElementById('tab-clients').style.display = tab === 'clients' ? 'block' : 'none';
-            
+
             document.getElementById('nav-leads').classList.toggle('active', tab === 'leads');
             document.getElementById('nav-clients').classList.toggle('active', tab === 'clients');
         }
     </script>
     <script type="module" src="js/admin.js"></script>
 </body>
+
 </html>
