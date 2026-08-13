@@ -1,6 +1,6 @@
 import {
     auth, signInWithEmailAndPassword, onAuthStateChanged, signOut,
-    db, collection, onSnapshot, query, orderBy
+    db, collection, onSnapshot
 } from "./firebase-config.js";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -66,8 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Hydrate Dashboard Data ───────────────────────────────────────────────
     function hydrateDashboard() {
         // 1. Listen to LEADS
-        const leadsQ = query(collection(db, 'leads'), orderBy('timestamp', 'desc'));
-        onSnapshot(leadsQ, (snapshot) => {
+        onSnapshot(collection(db, 'leads'), (snapshot) => {
             const tbody = document.getElementById('leads-tbody');
             if (snapshot.empty) {
                 tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem; color:#64748b;">No leads found.</td></tr>';
@@ -108,8 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // 2. Listen to USERS (Clients)
-        const clientsQ = query(collection(db, 'users'), orderBy('createdAt', 'desc'));
-        onSnapshot(clientsQ, (snapshot) => {
+        onSnapshot(collection(db, 'users'), (snapshot) => {
             const tbody = document.getElementById('clients-tbody');
             if (snapshot.empty) {
                 tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem; color:#64748b;">No registered clients found.</td></tr>';
