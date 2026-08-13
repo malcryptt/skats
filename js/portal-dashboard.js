@@ -41,10 +41,10 @@ function renderDashboard(data) {
     const visaEl = document.querySelector('.user-block > div > div:last-child');
     const avatar = document.querySelector('.user-block .avatar');
 
-    if (nameEl) nameEl.textContent = data.displayName || data.email;
+    if (nameEl) nameEl.textContent = data.fullName || data.email;
     if (visaEl) visaEl.textContent = data.caseType || "Pending Allocation";
-    if (avatar && data.displayName) {
-        const parts = data.displayName.split(' ');
+    if (avatar && data.fullName) {
+        const parts = data.fullName.split(' ');
         if (parts.length > 1) {
             avatar.textContent = parts[0][0] + parts[1][0];
         } else {

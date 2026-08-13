@@ -1,4 +1,4 @@
-import { auth, db, onAuthStateChanged, collection, onSnapshot, query, orderBy } from "./firebase-config.js";
+import { auth, db, onAuthStateChanged, collection, onSnapshot } from "./firebase-config.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const paymentTbody = document.querySelector('.payment-history tbody');
@@ -10,9 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const uid = user.uid;
 
         const paymentsRef = collection(db, "users", uid, "payments");
-        const q = query(paymentsRef, orderBy("date", "desc"));
 
-        onSnapshot(q, (snapshot) => {
+        onSnapshot(paymentsRef, (snapshot) => {
             if (snapshot.empty) return; // Retain fallback static HTML if database is empty
 
             let html = '';

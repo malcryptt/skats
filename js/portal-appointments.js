@@ -1,4 +1,4 @@
-import { auth, db, onAuthStateChanged, collection, onSnapshot, query, orderBy, addDoc, serverTimestamp } from "./firebase-config.js";
+import { auth, db, onAuthStateChanged, collection, onSnapshot, addDoc, serverTimestamp } from "./firebase-config.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const apptGrid = document.querySelector('.appt-grid');
@@ -12,8 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 1. Fetch existing appointments
         if (apptGrid) {
-            const q = query(apptsRef, orderBy("date", "asc"));
-            onSnapshot(q, (snapshot) => {
+            onSnapshot(apptsRef, (snapshot) => {
                 if (snapshot.empty) return; // Keep static dummy data
 
                 let html = '';

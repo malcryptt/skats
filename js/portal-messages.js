@@ -1,4 +1,4 @@
-import { auth, db, onAuthStateChanged, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "./firebase-config.js";
+import { auth, db, onAuthStateChanged, collection, addDoc, onSnapshot, serverTimestamp } from "./firebase-config.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const chatMessages = document.querySelector('.chat-messages');
@@ -12,17 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const uid = user.uid;
         const messagesRef = collection(db, "users", uid, "messages");
-        const q = query(messagesRef, orderBy("timestamp", "asc"));
 
         // Disable input until first load to prevent issues
         chatInput.disabled = true;
 
-        // Listen to real-time updates
-        const unsubscribe = onSnapshot(q, (snapshot) => {
+        // Listen to real-time updates (no orderBy — sort client-side to avoid index requirement)
+        const unsubscribe = onSnapshot(messagesRef, (snapshot) => {
             // Re-enable input once we connect
             chatInput.disabled = false;
 
-            // Clear out static HTML placeholders if we have real Firestore data OR if it's empty but connected
+            // Clear out static HTML placeholders
             chatMessages.innerHTML = '';
 
             if (snapshot.empty) {
@@ -35,10 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            snapshot.forEach((doc) => {
-                const msg = doc.data();
-                renderMessage(msg, chatMessages, user);
+            const docs = [];
+            snapshot.forEach((doc) => docs.push(doc.data()));
+            // Sort by timestamp client-side (ascending)
+            docs.sort((a, b) => {
+                if (!a.timestamp) return -1;
+                if (!b.timestamp) return 1;
+                return a.timestamp.toMillis() - b.timestamp.toMillis();
             });
+            docs.forEach((msg) => renderMessage(msg, chatMessages, user));
 
             // Auto scroll to bottom
             chatMessages.scrollTop = chatMessages.scrollHeight;
