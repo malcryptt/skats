@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Skats Consults</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .portal-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+            background: #f8fafc;
+        }
+
+        .portal-sidebar {
+            background: var(--navy);
+            color: white;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .portal-sidebar .brand-logo-white {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: white;
+            text-decoration: none;
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .portal-sidebar .brand-logo-white img {
+            width: 40px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .main-content {
+            padding: 3rem;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2.5rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Fraunces', serif;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        
+        .data-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            font-weight: 600;
+            color: #64748b;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-new { background: #dbeafe; color: #1e3a8a; }
+        .status-active { background: #dcfce7; color: #166534; }
+
+        /* Login Overlay for Admin */
+        #admin-login-overlay {
+            position: fixed; inset: 0; background: var(--navy); z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .admin-login-card {
+            background: white; padding: 3rem; border-radius: 12px;
+            width: 100%; max-width: 400px; text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Admin Login Overlay -->
+    <div id="admin-login-overlay">
+        <div class="admin-login-card">
+            <h2 style="font-family:'Fraunces', serif; color:var(--navy); margin-bottom: 0.5rem;">Admin Access</h2>
+            <p style="color:#64748b; margin-bottom: 2rem; font-size: 0.9rem;">Sign in with your administrator account.</p>
+            
+            <form id="admin-login-form">
+                <div id="admin-error" style="display:none; color:#ef4444; background:#fee2e2; padding:0.8rem; border-radius:8px; margin-bottom:1rem; font-size:0.9rem;"></div>
+                
+                <input type="email" id="admin-email" class="form-control" placeholder="Admin Email" required style="margin-bottom: 1rem; width:100%; box-sizing:border-box;">
+                <input type="password" id="admin-password" class="form-control" placeholder="Password" required style="margin-bottom: 1.5rem; width:100%; box-sizing:border-box;">
+                
+                <button type="submit" id="admin-login-btn" class="btn btn-primary" style="width: 100%;">Authenticate</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Admin Dashboard -->
+    <div class="portal-layout" id="admin-dashboard-ui" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="portal-sidebar">
+            <a href="index.html" class="brand-logo-white">
+                <img src="logo.png" alt="Skats Consults">
+                <span><strong>Skats</strong> Admin</span>
+            </a>
+            <nav style="flex-grow: 1;">
+                <a class="nav-item active" onclick="switchAdminTab('leads')" id="nav-leads"><i class="ri-inbox-archive-line"></i> Leads / Inquiries</a>
+                <a class="nav-item" onclick="switchAdminTab('clients')" id="nav-clients"><i class="ri-group-line"></i> Registered Clients</a>
+            </nav>
+            <div class="user-block" style="margin-top:auto; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.1);">
+                <a href="#" id="admin-logout" style="color:#fca5a5; text-decoration:none; font-size:0.9rem;"><i class="ri-logout-box-r-line"></i> Sign Out</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- LEADS TAB -->
+            <div id="tab-leads">
+                <div class="page-header">
+                    <div>
+                        <h1>Lead Inquiries</h1>
+                        <p style="color:var(--grey-text);">Contacts and Eligibility Quiz submissions.</p>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Source</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leads-tbody">
+                            <tr><td colspan="5" style="text-align:center; padding:2rem; color:#64748b;">Loading leads...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CLIENTS TAB -->
+            <div id="tab-clients" style="display:none;">
+                <div class="page-header">
+                    <div>
+                        <h1>Registered Clients</h1>
+                        <p style="color:var(--grey-text);">Users who have created a portal account.</p>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Created</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Case Status</th>
+                                <th>Case Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clients-tbody">
+                            <tr><td colspan="5" style="text-align:center; padding:2rem; color:#64748b;">Loading clients...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JS Logic -->
+    <script>
+        function switchAdminTab(tab) {
+            document.getElementById('tab-leads').style.display = tab === 'leads' ? 'block' : 'none';
+            document.getElementById('tab-clients').style.display = tab === 'clients' ? 'block' : 'none';
+            
+            document.getElementById('nav-leads').classList.toggle('active', tab === 'leads');
+            document.getElementById('nav-clients').classList.toggle('active', tab === 'clients');
+        }
+    </script>
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>
