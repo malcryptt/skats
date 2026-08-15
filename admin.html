@@ -261,17 +261,130 @@
         </main>
     </div>
 
-    <!-- JS Logic -->
     <script>
         function switchAdminTab(tab) {
             document.getElementById('tab-leads').style.display = tab === 'leads' ? 'block' : 'none';
             document.getElementById('tab-clients').style.display = tab === 'clients' ? 'block' : 'none';
-
             document.getElementById('nav-leads').classList.toggle('active', tab === 'leads');
             document.getElementById('nav-clients').classList.toggle('active', tab === 'clients');
         }
     </script>
-    <script type="module" src="js/admin.js?v=3"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut }
+            from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot }
+            from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAsFfZN11JQuRQ1XM7aDJVMUatmgdmFUaE",
+            authDomain: "skats-consults.firebaseapp.com",
+            projectId: "skats-consults",
+            storageBucket: "skats-consults.firebasestorage.app",
+            messagingSenderId: "98599347696",
+            appId: "1:98599347696:web:9627898c512fa6c3126935"
+        };
+
+        const app = initializeApp(firebaseConfig, "admin-app");
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const overlay = document.getElementById('admin-login-overlay');
+        const dashboardUi = document.getElementById('admin-dashboard-ui');
+        const loginForm = document.getElementById('admin-login-form');
+        const emailInput = document.getElementById('admin-email');
+        const passInput = document.getElementById('admin-password');
+        const loginBtn = document.getElementById('admin-login-btn');
+        const errorMsg = document.getElementById('admin-error');
+        const logoutBtn = document.getElementById('admin-logout');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                overlay.style.display = 'none';
+                dashboardUi.style.display = 'grid';
+                hydrateDashboard();
+            } else {
+                overlay.style.display = 'flex';
+                dashboardUi.style.display = 'none';
+            }
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorMsg.style.display = 'none';
+            loginBtn.textContent = 'Authenticating...';
+            loginBtn.disabled = true;
+            try {
+                await signInWithEmailAndPassword(auth, emailInput.value.trim(), passInput.value);
+            } catch (err) {
+                const msgs = {
+                    'auth/invalid-credential': 'Incorrect email or password.',
+                    'auth/user-not-found': 'No account found with this email.',
+                    'auth/wrong-password': 'Incorrect password.',
+                    'auth/too-many-requests': 'Too many attempts. Please wait.',
+                };
+                errorMsg.textContent = msgs[err.code] || 'Authentication failed. Try again.';
+                errorMsg.style.display = 'block';
+                loginBtn.textContent = 'Authenticate';
+                loginBtn.disabled = false;
+            }
+        });
+
+        logoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await signOut(auth);
+        });
+
+        function hydrateDashboard() {
+            onSnapshot(collection(db, 'leads'), (snapshot) => {
+                const tbody = document.getElementById('leads-tbody');
+                if (snapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:#64748b;">No leads yet.</td></tr>';
+                    return;
+                }
+                let html = '';
+                snapshot.forEach(docSnap => {
+                    const d = docSnap.data();
+                    let dateStr = '—';
+                    if (d.timestamp?.toDate) dateStr = d.timestamp.toDate().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                    let details = d.source === 'Eligibility Quiz'
+                        ? `<span style="font-size:.8rem;color:#64748b">Visa: ${d.visaType || '—'} | Region: ${d.region || '—'}</span>`
+                        : `<span style="font-size:.8rem;color:#64748b">Subj: ${d.subject || '—'}</span>`;
+                    html += `<tr>
+                        <td>${dateStr}</td><td><strong>${d.name || 'N/A'}</strong></td><td>${d.email || 'N/A'}</td>
+                        <td><span class="status-badge ${d.source === 'Eligibility Quiz' ? 'status-active' : 'status-new'}">${d.source || 'Unknown'}</span></td>
+                        <td>${details}</td></tr>`;
+                });
+                tbody.innerHTML = html;
+            }, () => {
+                document.getElementById('leads-tbody').innerHTML =
+                    '<tr><td colspan="5" style="text-align:center;padding:2rem;color:#ef4444;">Permission denied — update Firestore Rules.</td></tr>';
+            });
+
+            onSnapshot(collection(db, 'users'), (snapshot) => {
+                const tbody = document.getElementById('clients-tbody');
+                if (snapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:#64748b;">No clients yet.</td></tr>';
+                    return;
+                }
+                let html = '';
+                snapshot.forEach(docSnap => {
+                    const d = docSnap.data();
+                    let dateStr = '—';
+                    if (d.createdAt?.toDate) dateStr = d.createdAt.toDate().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                    html += `<tr>
+                        <td>${dateStr}</td><td><strong>${d.fullName || d.username || 'New User'}</strong></td><td>${d.email || 'N/A'}</td>
+                        <td><span class="status-badge status-new">${d.caseStatus || 'Pending'}</span></td>
+                        <td><div style="background:#e2e8f0;height:6px;border-radius:3px;overflow:hidden;width:100px;">
+                            <div style="background:#1B6FA8;height:100%;width:${d.caseProgress || 0}%;"></div></div></td></tr>`;
+                });
+                tbody.innerHTML = html;
+            }, () => {
+                document.getElementById('clients-tbody').innerHTML =
+                    '<tr><td colspan="5" style="text-align:center;padding:2rem;color:#ef4444;">Permission denied — update Firestore Rules.</td></tr>';
+            });
+        }
+    </script>
 </body>
 
 </html>
